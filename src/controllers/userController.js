@@ -28,7 +28,7 @@ const createUser = async function (req, res) {
         };
         title = title.trim()
         if (!isValidTitle(title)) {
-            res.status(400).send({status:false,message:`Title should be 'Mr', 'Mrs', 'Miss', ` })
+            res.status(400).send({ status: false, message: `Title should be 'Mr', 'Mrs', 'Miss', ` })
             return
         };
         if (!isValid(name)) {
@@ -73,7 +73,7 @@ const createUser = async function (req, res) {
             res.status(400).send({ status: false, message: "password should  between 8 and 15 characters" })
             return
         };
-                 // Validation ends
+        // Validation ends
         const userData = { title, name, phone, email, password, address };
 
         const newUser = await userModel.create(userData);
@@ -85,24 +85,23 @@ const createUser = async function (req, res) {
 const loginAuthor = async function (req, res) {
     try {
         const data = req.body;
-       
         if (!isValidRequestBody(data)) {
             return res.status(400).send({ status: false, msg: "provide login credentials" })
         };
-        let  { email, password } = data
+        let { email, password } = data
         if (!isValid(email)) {
             return res.status(401).send({ status: false, msg: "Email is required" })
         };
-        email=email.toLowerCase().trim()
-        if(!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
-            res.status(400).send({status: false, message: `Email should be a valid email address`})
+        email = email.toLowerCase().trim()
+        if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))) {
+            res.status(400).send({ status: false, message: `Email should be a valid email address` })
             return
-        };        
+        };
         if (!isValid(password)) {
             res.status(402).send({ status: false, msg: "password is required" })
             return
         };
-        password=password.trim()
+        password = password.trim()
         if (!((password.length > 7) && (password.length < 16))) {
             return res.status(400).send({ status: false, message: `Password length should be between 8 and 15.` })
         };
@@ -125,5 +124,4 @@ const loginAuthor = async function (req, res) {
         return
     };
 };
-
 module.exports = { createUser, loginAuthor }
